@@ -1,0 +1,152 @@
+.search-form {
+  &__container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  &__title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    color: #1f2937;
+  }
+
+  &__subtitle {
+    font-size: 1rem;
+    color: #6b7280;
+    margin: 0 0 2rem 0;
+  }
+
+  &__section {
+    background: #f9fafb;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &__section-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+    color: #374151;
+  }
+
+  &__form-group {
+    margin-bottom: 1rem;
+  }
+
+  &__label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #374151;
+  }
+
+  &__input,
+  &__select {
+    width: 100%;
+    padding: 0.625rem;
+    font-size: 0.875rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    background: #ffffff;
+    transition: border-color 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: #3b82f6;
+    }
+  }
+
+  &__button {
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #ffffff;
+    background: #3b82f6;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover:not(:disabled) {
+      background: #2563eb;
+    }
+
+    &:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+  }
+
+  &__selected-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    min-height: 2.5rem;
+    padding: 0.625rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    background: #ffffff;
+    margin-bottom: 0.5rem;
+    align-items: center;
+  }
+
+  &__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.625rem;
+    font-size: 0.875rem;
+    color: #ffffff;
+    background: #3b82f6;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #ef4444;
+    }
+  }
+
+  &__tag-remove {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  &__tag-option {
+    padding: 0.375rem 0.625rem;
+    font-size: 0.875rem;
+    color: #374151;
+    background: #e5e7eb;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover:not(.search-form__tag-option--selected) {
+      background: #d1d5db;
+    }
+
+    &--selected {
+      background: #dbeafe;
+      color: #1e40af;
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+
+  &__placeholder {
+    color: #9ca3af;
+    font-size: 0.875rem;
+  }
+}

@@ -1,0 +1,27 @@
+<div class="app__container">
+  <div class="app__content">
+    <app-search-form
+      (search)="onSearch($event)"
+      (configUpdated)="onConfigUpdated($event)"
+    />
+    <app-results-table
+      [results]="results()"
+      [loading]="loading()"
+      [error]="error()"
+      [searchQuery]="searchQuery()"
+      [totalResults]="totalResults()"
+      [currentPage]="currentPage()"
+      [pageSize]="pageSize()"
+      [hasNext]="hasNext()"
+      [hasPrevious]="hasPrevious()"
+      [coachTypes]="currentSearchParams().coachTypes"
+      [countries]="currentSearchParams().countries"
+      [funnelTerms]="currentSearchParams().funnelTerms"
+      [leadMagnetTerms]="currentSearchParams().leadMagnetTerms"
+      (previousPage)="onPreviousPage()"
+      (nextPage)="onNextPage()"
+      (downloadCsv)="onDownloadCsv()"
+      (clear)="onClear()"
+    />
+  </div>
+</div>

@@ -1,0 +1,264 @@
+<div class="search-form__container">
+  <h1 class="search-form__title">Coach Finder</h1>
+  <p class="search-form__subtitle">Find coaches on LinkedIn</p>
+
+  <div class="search-form__section">
+    <h2 class="search-form__section-title">API Configuration</h2>
+    <div class="search-form__form-group">
+      <label for="apiKey" class="search-form__label">Google Cloud API Key</label>
+      <input
+        id="apiKey"
+        type="password"
+        [value]="apiKey()"
+        (input)="apiKey.set($any($event.target).value)"
+        placeholder="Enter your Google Cloud API key"
+        class="search-form__input"
+      />
+    </div>
+    <div class="search-form__form-group">
+      <label for="searchEngineId" class="search-form__label">Search Engine ID (CX)</label>
+      <input
+        id="searchEngineId"
+        type="text"
+        [value]="searchEngineId()"
+        (input)="searchEngineId.set($any($event.target).value)"
+        placeholder="Enter your Search Engine ID"
+        class="search-form__input"
+      />
+    </div>
+  </div>
+
+  <div class="search-form__section">
+    <h2 class="search-form__section-title">Search Parameters</h2>
+
+    <div class="search-form__form-group">
+      <label class="search-form__label">Coaching Type</label>
+      <div class="search-form__selected-box">
+        @for (type of selectedCoachTypes(); track type) {
+          <span class="search-form__tag" (click)="removeCoachType(type)">
+            {{ type }}
+            <span class="search-form__tag-remove">&times;</span>
+          </span>
+        }
+        @if (selectedCoachTypes().length === 0) {
+          <span class="search-form__placeholder">Click tags or type to add coaching types</span>
+        }
+      </div>
+      <input
+        [value]="customCoachTypeInput()"
+        (input)="customCoachTypeInput.set($any($event.target).value)"
+        (keydown)="handleCoachTypeInputKeydown($event)"
+        placeholder="Type coaching type and press Enter"
+        class="search-form__input"
+      />
+      <div class="search-form__tags">
+        @for (type of coachTypes; track type) {
+          <span
+            class="search-form__tag-option"
+            [class.search-form__tag-option--selected]="isCoachTypeSelected(type)"
+            (click)="addCoachType(type)"
+          >
+            {{ type }}
+          </span>
+        }
+      </div>
+    </div>
+
+    <div class="search-form__form-group">
+      <label class="search-form__label">Funnel Terms</label>
+      <div class="search-form__selected-box">
+        @for (term of selectedFunnelTerms(); track term) {
+          <span class="search-form__tag" (click)="removeFunnelTerm(term)">
+            {{ term }}
+            <span class="search-form__tag-remove">&times;</span>
+          </span>
+        }
+        @if (selectedFunnelTerms().length === 0) {
+          <span class="search-form__placeholder">Click tags or type to add funnel terms</span>
+        }
+      </div>
+      <input
+        [value]="customFunnelTermInput()"
+        (input)="customFunnelTermInput.set($any($event.target).value)"
+        (keydown)="handleFunnelTermInputKeydown($event)"
+        placeholder="Type funnel term and press Enter"
+        class="search-form__input"
+      />
+      <div class="search-form__tags">
+        @for (term of funnelTerms; track term) {
+          <span
+            class="search-form__tag-option"
+            [class.search-form__tag-option--selected]="isFunnelTermSelected(term)"
+            (click)="addFunnelTerm(term)"
+          >
+            {{ term }}
+          </span>
+        }
+      </div>
+    </div>
+
+    <div class="search-form__form-group">
+      <label class="search-form__label">Country</label>
+      <div class="search-form__selected-box">
+        @for (country of selectedCountries(); track country) {
+          <span class="search-form__tag" (click)="removeCountry(country)">
+            {{ country }}
+            <span class="search-form__tag-remove">&times;</span>
+          </span>
+        }
+        @if (selectedCountries().length === 0) {
+          <span class="search-form__placeholder">Click tags or type to add countries</span>
+        }
+      </div>
+      <input
+        [value]="customCountryInput()"
+        (input)="customCountryInput.set($any($event.target).value)"
+        (keydown)="handleCountryInputKeydown($event)"
+        placeholder="Type country and press Enter"
+        class="search-form__input"
+      />
+      <div class="search-form__tags">
+        @for (country of countries; track country) {
+          <span
+            class="search-form__tag-option"
+            [class.search-form__tag-option--selected]="isCountrySelected(country)"
+            (click)="addCountry(country)"
+          >
+            {{ country }}
+          </span>
+        }
+      </div>
+    </div>
+
+    <div class="search-form__form-group">
+      <label class="search-form__label">Lead Magnet Terms</label>
+      <div class="search-form__selected-box">
+        @for (term of selectedLeadMagnetTerms(); track term) {
+          <span class="search-form__tag" (click)="removeLeadMagnetTerm(term)">
+            {{ term }}
+            <span class="search-form__tag-remove">&times;</span>
+          </span>
+        }
+        @if (selectedLeadMagnetTerms().length === 0) {
+          <span class="search-form__placeholder">Click tags or type to add lead magnet terms</span>
+        }
+      </div>
+      <input
+        [value]="customLeadMagnetTermInput()"
+        (input)="customLeadMagnetTermInput.set($any($event.target).value)"
+        (keydown)="handleLeadMagnetTermInputKeydown($event)"
+        placeholder="Type lead magnet term and press Enter"
+        class="search-form__input"
+      />
+      <div class="search-form__tags">
+        @for (term of leadMagnetTerms; track term) {
+          <span
+            class="search-form__tag-option"
+            [class.search-form__tag-option--selected]="isLeadMagnetTermSelected(term)"
+            (click)="addLeadMagnetTerm(term)"
+          >
+            {{ term }}
+          </span>
+        }
+      </div>
+    </div>
+
+    <div class="search-form__form-group">
+      <label class="search-form__label">Income Proxy Terms</label>
+      <div class="search-form__selected-box">
+        @for (term of selectedIncomeProxyTerms(); track term) {
+          <span class="search-form__tag" (click)="removeIncomeProxyTerm(term)">
+            {{ term }}
+            <span class="search-form__tag-remove">&times;</span>
+          </span>
+        }
+        @if (selectedIncomeProxyTerms().length === 0) {
+          <span class="search-form__placeholder">Click tags or type to add income proxy terms</span>
+        }
+      </div>
+      <input
+        [value]="customIncomeProxyTermInput()"
+        (input)="customIncomeProxyTermInput.set($any($event.target).value)"
+        (keydown)="handleIncomeProxyTermInputKeydown($event)"
+        placeholder='Type income proxy term and press Enter (e.g. "founder", CEO, "podcast host")'
+        class="search-form__input"
+      />
+      <div class="search-form__tags">
+        @for (term of incomeProxyTerms; track term) {
+          <span
+            class="search-form__tag-option"
+            [class.search-form__tag-option--selected]="isIncomeProxyTermSelected(term)"
+            (click)="addIncomeProxyTerm(term)"
+          >
+            {{ term }}
+          </span>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="search-form__section">
+    <h2 class="search-form__section-title">Exclusion Terms</h2>
+
+    <div class="search-form__form-group">
+      <label class="search-form__label">Terms to Exclude</label>
+      <div class="search-form__selected-box">
+        @for (term of selectedExclusionTerms(); track term) {
+          <span class="search-form__tag" (click)="removeExclusionTerm(term)">
+            {{ term }}
+            <span class="search-form__tag-remove">&times;</span>
+          </span>
+        }
+        @if (selectedExclusionTerms().length === 0) {
+          <span class="search-form__placeholder">Click tags or type to add exclusion terms</span>
+        }
+      </div>
+      <input
+        [value]="customExclusionTermInput()"
+        (input)="customExclusionTermInput.set($any($event.target).value)"
+        (keydown)="handleExclusionTermInputKeydown($event)"
+        placeholder="Type exclusion term and press Enter"
+        class="search-form__input"
+      />
+      <div class="search-form__tags">
+        @for (term of exclusionTerms; track term) {
+          <span
+            class="search-form__tag-option"
+            [class.search-form__tag-option--selected]="isExclusionTermSelected(term)"
+            (click)="addExclusionTerm(term)"
+          >
+            {{ term }}
+          </span>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="search-form__form-group">
+    <label class="search-form__label">Total results to fetch (max 100)</label>
+    <select
+      [value]="resultsPerSearch()"
+      (change)="resultsPerSearch.set(parseInt($any($event.target).value, 10))"
+      class="search-form__input"
+    >
+      <option value="10">10 results</option>
+      <option value="20">20 results</option>
+      <option value="30">30 results</option>
+      <option value="40">40 results</option>
+      <option value="50">50 results</option>
+      <option value="60">60 results</option>
+      <option value="70">70 results</option>
+      <option value="80">80 results</option>
+      <option value="90">90 results</option>
+      <option value="100">100 results</option>
+    </select>
+  </div>
+
+  <button
+    [disabled]="!isFormValid()"
+    (click)="onSearch()"
+    class="search-form__button"
+  >
+    Search for Coaches
+  </button>
+</div>

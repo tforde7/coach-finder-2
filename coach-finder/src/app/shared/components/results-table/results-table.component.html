@@ -1,0 +1,122 @@
+<div class="results-table">
+  @if (showLoading) {
+    <div class="results-table__loading">
+      <p>Searching for coaches...</p>
+    </div>
+  } @else if (showError) {
+    <div class="results-table__error">
+      <p>Error: {{ errorMessage }}</p>
+    </div>
+  } @else if (!hasResults) {
+    <div class="results-table__empty">
+      <p>No results yet. Configure your API keys and search for coaches.</p>
+    </div>
+  } @else {
+    <div class="results-table__header">
+      <div class="results-table__header-left">
+        <h2 class="results-table__title">Search Results</h2>
+        <div class="results-table__stats">
+          <span class="results-table__stat">Showing {{ resultRange }} of {{ totalResults() }} results</span>
+        </div>
+      </div>
+      <div class="results-table__header-right">
+        <button (click)="onClear()" class="results-table__clear-btn">
+          Clear
+        </button>
+        <button (click)="onDownload()" class="results-table__download-btn">
+          Download CSV
+        </button>
+      </div>
+    </div>
+
+    @if (searchQuery()) {
+      <div class="results-table__search-query">
+        <span class="results-table__search-label">Search:</span>
+        <span class="results-table__search-text">{{ searchQuery() }}</span>
+      </div>
+    }
+
+    <div class="results-table__container">
+      <table class="results-table__table">
+        <thead>
+          <tr>
+            <th class="results-table__header-cell">#</th>
+            <th class="results-table__header-cell">Title</th>
+            <th class="results-table__header-cell">LinkedIn URL</th>
+            <th class="results-table__header-cell">Snippet</th>
+            <th class="results-table__header-cell">Location</th>
+            <th class="results-table__header-cell">Niche Guess</th>
+            <th class="results-table__header-cell">Funnel Signals</th>
+            <th class="results-table__header-cell">Lead Magnet Signals</th>
+            <th class="results-table__header-cell">Website URL</th>
+            <th class="results-table__header-cell">Calendar/Apply Link</th>
+            <th class="results-table__header-cell">Recent Activity</th>
+            <th class="results-table__header-cell">Confidence Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (result of results(); track result.link; let i = $index) {
+            <tr class="results-table__row">
+              <td class="results-table__cell">{{ rowNumber(i) }}</td>
+              <td class="results-table__cell">{{ result.title }}</td>
+              <td class="results-table__cell">
+                <a [href]="result.link" target="_blank" rel="noopener" class="results-table__link">
+                  {{ result.link }}
+                </a>
+              </td>
+              <td class="results-table__cell results-table__cell--snippet">
+                {{ result.snippet }}
+              </td>
+              <td class="results-table__cell">
+                {{ locationFor(result) }}
+              </td>
+              <td class="results-table__cell">
+                {{ nicheGuessFor(result) }}
+              </td>
+              <td class="results-table__cell">
+                {{ funnelSignalsFor(result) }}
+              </td>
+              <td class="results-table__cell">
+                {{ leadMagnetSignalsFor(result) }}
+              </td>
+              <td class="results-table__cell">
+                {{ websiteUrlFor() }}
+              </td>
+              <td class="results-table__cell">
+                {{ calendarOrApplyLinkFor(result) }}
+              </td>
+              <td class="results-table__cell">
+                {{ recentActivitySignalFor() }}
+              </td>
+              <td class="results-table__cell">
+                {{ confidenceScoreFor() }}
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <div class="results-table__pagination">
+      <button
+        class="results-table__page-btn"
+        [disabled]="!hasPrevious() || showLoading"
+        (click)="onPreviousPage()"
+      >
+        ← Previous
+      </button>
+
+      <span class="results-table__page-info">
+        Page {{ currentPage() }}
+      </span>
+
+      <button
+        class="results-table__page-btn"
+        [disabled]="!hasNext() || showLoading"
+        (click)="onNextPage()"
+      >
+        Next →
+      </button>
+    </div>
+  }
+</div>
